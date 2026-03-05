@@ -1,11 +1,13 @@
 package br.com.fiap.cinefinder_v3.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "cf_review")
 
 @Data
 @Builder
@@ -23,6 +25,7 @@ public class Review {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
+    @PositiveOrZero
     private Double rating;
 
     private String comment;

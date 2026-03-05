@@ -4,15 +4,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name = "cf_movie")
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,9 +38,14 @@ public class Movie {
     private Double averageRating;
 
     @ManyToMany
-    private List<Genre> genres = new ArrayList<>();
+    @JoinTable(
+            name = "cf_movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
 
-    @ManyToMany
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
     public void addGenre(Genre genre) {
@@ -47,11 +57,17 @@ public class Movie {
     }
 
     public void addReview(Review review) {
+        review.setMovie(this);
         this.reviews.add(review);
         updateRate();
     }
 
     private void updateRate() {
+        this.averageRating = 0.0;
+        reviews.stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .ifPresent(avg -> this.averageRating = avg);
     }
 
 

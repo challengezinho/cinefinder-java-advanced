@@ -1,9 +1,6 @@
 package br.com.fiap.cinefinder_v3.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "cf_user")
 
 @Builder
 @Data
@@ -41,5 +39,6 @@ public class User {
     private Boolean isAdmin;
 
     @Builder.Default
+    @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 }
