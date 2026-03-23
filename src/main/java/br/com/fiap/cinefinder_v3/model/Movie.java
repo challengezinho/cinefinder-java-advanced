@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +36,7 @@ public class Movie {
     private LocalDate releaseDate;
 
     @PositiveOrZero
-    private Double averageRating;
+    private BigDecimal averageRating;
 
     @ManyToMany
     @JoinTable(
@@ -63,11 +64,11 @@ public class Movie {
     }
 
     private void updateRate() {
-        this.averageRating = 0.0;
+        this.averageRating = new BigDecimal(0);
         reviews.stream()
-                .mapToDouble(Review::getRating)
+                .mapToDouble(r -> r.getRating().doubleValue())
                 .average()
-                .ifPresent(avg -> this.averageRating = avg);
+                .ifPresent(avg -> this.averageRating = BigDecimal.valueOf(avg));
     }
 
 

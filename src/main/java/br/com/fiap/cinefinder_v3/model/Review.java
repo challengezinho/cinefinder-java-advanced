@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "cf_review")
 
@@ -26,16 +28,16 @@ public class Review {
     private Movie movie;
 
     @PositiveOrZero
-    private Double rating;
+    private BigDecimal rating;
 
-    private String comment;
+    private String comments;
 
-    public Review(Long id, User user, Movie movie, Double rating, String comment) {
+    public Review(Long id, User user, Movie movie, BigDecimal rating, String comments) {
         this.id = id;
         this.user = user;
         this.movie = movie;
         this.rating = rating;
-        this.comment = comment;
+        this.comments = comments;
 
         movie.addReview(this);
     }
