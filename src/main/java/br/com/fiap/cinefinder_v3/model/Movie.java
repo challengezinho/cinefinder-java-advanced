@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -67,11 +68,19 @@ public class Movie {
     }
 
     private void updateRate() {
-        this.averageRating = new BigDecimal(0);
-        reviews.stream()
-                .mapToDouble(r -> r.getRating().doubleValue())
-                .average()
-                .ifPresent(avg -> this.averageRating = BigDecimal.valueOf(avg));
+         if (this.reviews.isEmpty()) {
+             this.averageRating = BigDecimal.ZERO;
+             return;
+         }
+
+        var sum = reviews.stream()
+                .map(Review::getRating)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        this.averageRating = sum.divide(
+                BigDecimal.valueOf(reviews.size()),
+                2,
+                RoundingMode.HALF_UP);
     }
 
 
