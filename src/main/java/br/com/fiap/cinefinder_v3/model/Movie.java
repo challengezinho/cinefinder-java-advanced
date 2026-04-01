@@ -1,6 +1,8 @@
 package br.com.fiap.cinefinder_v3.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -35,25 +37,26 @@ public class Movie {
 
     private LocalDate releaseDate;
 
-    @PositiveOrZero
+    private String posterUrl;
+
+    @Min(0)
+    @Max(10)
     private BigDecimal averageRating;
 
-    @ManyToMany
-    @JoinTable(
-            name = "cf_movie_genres",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private Set<Genre> genres = new HashSet<>();
+    @ElementCollection(targetClass = GENRE.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "cf_movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "genre")
+    private Set<GENRE> genres = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-    public void addGenre(Genre genre) {
+    public void addGenre(GENRE genre) {
         this.genres.add(genre);
     }
 
-    public void removeGenre(Genre genre) {
+    public void removeGenre(GENRE genre) {
         this.genres.remove(genre);
     }
 
