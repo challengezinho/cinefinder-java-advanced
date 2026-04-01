@@ -5,6 +5,7 @@ CREATE TABLE cf_movie
     description    VARCHAR(255),
     release_date   date,
     average_rating DECIMAL(4,2),
+    poster_url VARCHAR(500),
     CONSTRAINT pk_cf_movie PRIMARY KEY (id)
 );
 
