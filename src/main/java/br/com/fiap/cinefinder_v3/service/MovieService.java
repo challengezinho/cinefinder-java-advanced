@@ -1,7 +1,6 @@
 package br.com.fiap.cinefinder_v3.service;
 
 import br.com.fiap.cinefinder_v3.dto.MovieResponse;
-import br.com.fiap.cinefinder_v3.model.Movie;
 import br.com.fiap.cinefinder_v3.repository.MovieRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
