@@ -1,11 +1,10 @@
 -- =========================
 -- USERS
 -- =========================
-INSERT INTO cf_user ( name, email, password, age, is_admin) VALUES
-                                                                   ('Jon', 'jon@email.com', '123456', 20, TRUE),
-                                                                   ('Maria', 'maria@email.com', '123456', 22, FALSE),
-                                                                   ( 'Carlos', 'carlos@email.com', '123456', 30, FALSE);
-
+INSERT INTO cf_user (name, email, password, age, is_admin) VALUES
+                                                               ('Jon', 'jon@email.com', '$2a$10$RhSleCCmroOvMSrrtNbhzearAG4Blpfm3do73DhGGNprho.tW/JEC', 20, TRUE),
+                                                               ('Maria', 'maria@email.com', '$2a$10$LdpMVsbt0tfhMsOqGHARdebUDtyGQ7o6Ljjo7LqfOQgcz/WHJhUGe', 22, FALSE),
+                                                               ('Carlos', 'carlos@email.com', '$2a$10$LdpMVsbt0tfhMsOqGHARdebUDtyGQ7o6Ljjo7LqfOQgcz/WHJhUGe', 30, FALSE);
 -- =========================
 -- MOVIES
 -- =========================

@@ -58,11 +58,11 @@ public class ReviewService {
 
         var review = repo.findById(id).orElseThrow();
 
-        if (reviewDTO.comments() != null) {
+        if (reviewDTO.comments() != null && !review.getComments().equalsIgnoreCase(reviewDTO.comments())) {
 
             review.setComments(reviewDTO.comments());
         }
-        if (reviewDTO.rating() != null) {
+        if (reviewDTO.rating() != null && !review.getRating().equals(reviewDTO.rating())) {
 
             review.setRating(reviewDTO.rating());
         }

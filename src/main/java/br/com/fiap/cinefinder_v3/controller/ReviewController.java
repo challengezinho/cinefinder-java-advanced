@@ -37,7 +37,7 @@ public class ReviewController {
         return service.create(reviewDto);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ReviewResponse updateReview(@PathVariable Long id,
                                        @RequestBody UpdateReviewDTO reviewDTO) {
         log.info("Updating review {}: {}", id, reviewDTO);
