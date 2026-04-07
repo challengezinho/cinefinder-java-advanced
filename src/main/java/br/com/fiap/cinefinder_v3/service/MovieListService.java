@@ -7,6 +7,7 @@ import br.com.fiap.cinefinder_v3.model.MovieList;
 import br.com.fiap.cinefinder_v3.repository.MovieListRepo;
 import br.com.fiap.cinefinder_v3.repository.MovieRepo;
 import br.com.fiap.cinefinder_v3.repository.UserRepo;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +29,7 @@ public class MovieListService {
         return MovieListResponse.fromMovieList(repo.findById(id).orElseThrow());
     }
 
-    public MovieListResponse create(CreateMovieListDTO movieList) {
+    public MovieListResponse create(@Valid CreateMovieListDTO movieList) {
         var user = userRepo.findById(movieList.userId()).orElseThrow();
         var newMList = new MovieList();
 
@@ -38,7 +39,7 @@ public class MovieListService {
         return MovieListResponse.fromMovieList(repo.save(newMList));
     }
 
-    public MovieListResponse update(Long id, UpdateMovieListDTO movieList) {
+    public MovieListResponse update(Long id, @Valid UpdateMovieListDTO movieList) {
         if (movieList.name() == null || movieList.name().isEmpty()) {
             throw new IllegalArgumentException("Insira um nome válido para alterar");
         }

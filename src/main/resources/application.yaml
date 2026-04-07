@@ -20,8 +20,8 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration/oracle
 
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
 
 ---
 spring:

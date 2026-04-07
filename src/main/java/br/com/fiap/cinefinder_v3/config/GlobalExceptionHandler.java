@@ -1,6 +1,7 @@
 package br.com.fiap.cinefinder_v3.config;
 
 import br.com.fiap.cinefinder_v3.dto.ErrorResponse;
+import br.com.fiap.cinefinder_v3.exception.EmailAlreadyExists;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ public class GlobalExceptionHandler {
         return buildResponse(ex, HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler({IllegalArgumentException.class, EmailAlreadyExists.class})
     public ResponseEntity<ErrorResponse> handleBadRequest(Exception ex, HttpServletRequest request) {
         return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleBadRequest(MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handleValidationError(MethodArgumentNotValidException ex, HttpServletRequest request) {
         var status = HttpStatus.BAD_REQUEST;
 
         var error = new ErrorResponse(

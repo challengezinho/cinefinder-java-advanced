@@ -2,6 +2,7 @@ package br.com.fiap.cinefinder_v3.controller;
 
 import br.com.fiap.cinefinder_v3.dto.LoginDTO;
 import br.com.fiap.cinefinder_v3.dto.RegisterDTO;
+import br.com.fiap.cinefinder_v3.exception.EmailAlreadyExists;
 import br.com.fiap.cinefinder_v3.model.User;
 import br.com.fiap.cinefinder_v3.repository.UserRepo;
 import br.com.fiap.cinefinder_v3.service.JwtService;
@@ -34,7 +35,7 @@ public class AuthController {
     public String register(@RequestBody @Valid RegisterDTO dto) {
 
         if (userRepository.findByEmail(dto.email()).isPresent()) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new EmailAlreadyExists("Email já cadastrado");
         }
 
         User user = User.builder()
