@@ -1,9 +1,12 @@
 package br.com.fiap.cinefinder_v3.service;
 
 import br.com.fiap.cinefinder_v3.dto.CreateMovieListDTO;
+import br.com.fiap.cinefinder_v3.dto.MovieListResponse;
 import br.com.fiap.cinefinder_v3.dto.UpdateMovieListDTO;
 import br.com.fiap.cinefinder_v3.model.MovieList;
 import br.com.fiap.cinefinder_v3.repository.MovieListRepo;
+import br.com.fiap.cinefinder_v3.repository.MovieRepo;
+import br.com.fiap.cinefinder_v3.repository.UserRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,34 +17,58 @@ import org.springframework.stereotype.Service;
 public class MovieListService {
 
     private final MovieListRepo repo;
+    private final UserRepo userRepo;
+    private final MovieRepo movieRepo;
 
-    public Page<MovieList> getAllMovieLists(Pageable pageable) {
-        return repo.findAll(pageable);
+    public Page<MovieListResponse> getAllMovieLists(Pageable pageable) {
+        return repo.findAll(pageable).map(MovieListResponse::fromMovieList);
     }
 
-    public MovieList getById(Long id) {
-        return repo.findById(id).orElseThrow();
+    public MovieListResponse getById(Long id) {
+        return MovieListResponse.fromMovieList(repo.findById(id).orElseThrow());
     }
 
-    public MovieList create(CreateMovieListDTO movieList) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public MovieListResponse create(CreateMovieListDTO movieList) {
+        var user = userRepo.findById(movieList.userId()).orElseThrow();
+        var newMList = new MovieList();
+
+        newMList.setName(movieList.name());
+        newMList.setUser(user);
+
+        return MovieListResponse.fromMovieList(repo.save(newMList));
     }
 
-    public MovieList update(Long id, UpdateMovieListDTO movieList) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public MovieListResponse update(Long id, UpdateMovieListDTO movieList) {
+        if (movieList.name() == null || movieList.name().isEmpty()) {
+            throw new IllegalArgumentException("Insira um nome válido para alterar");
+        }
+
+        var mList = repo.findById(id).orElseThrow();
+
+        if (!mList.getName().equals(movieList.name())) {
+            mList.setName(movieList.name());
+        }
+
+        return MovieListResponse.fromMovieList(repo.save(mList));
     }
 
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        var mList = repo.findById(id).orElseThrow();
+        repo.delete(mList);
     }
 
-    public MovieList addMovieToList(Long id, Long movieId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public MovieListResponse addMovieToList(Long id, Long movieId) {
+        var mList = repo.findById(id).orElseThrow();
+        var movie = movieRepo.findById(movieId).orElseThrow();
+        mList.addMovie(movie);
+        return MovieListResponse.fromMovieList(repo.save(mList));
     }
 
-    public MovieList removeMovieToList(Long id, Long movieId) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public MovieListResponse removeMovieToList(Long id, Long movieId) {
+        var mList = repo.findById(id).orElseThrow();
+        var movie = movieRepo.findById(movieId).orElseThrow();
+        mList.removeMovie(movie);
+        return MovieListResponse.fromMovieList(repo.save(mList));
     }
 
-    //TODO: MovieListResponse implementation
 }
