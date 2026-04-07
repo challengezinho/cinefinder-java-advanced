@@ -2,7 +2,7 @@ package br.com.fiap.cinefinder_v3.controller;
 
 import br.com.fiap.cinefinder_v3.dto.CreateMovieListDTO;
 import br.com.fiap.cinefinder_v3.dto.MovieListResponse;
-import br.com.fiap.cinefinder_v3.model.MovieList;
+import br.com.fiap.cinefinder_v3.dto.UpdateMovieListDTO;
 import br.com.fiap.cinefinder_v3.service.MovieListService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -43,6 +43,12 @@ public class MovieListController {
     public void deleteMovieList(@PathVariable Long id) {
         log.info("Deleting movie list with id {}", id);
         service.delete(id);
+    }
+
+    @PatchMapping("/{id}")
+    public MovieListResponse updateMovieList(@PathVariable Long id, @RequestBody UpdateMovieListDTO movieList) {
+        log.info("Updating movie list with id {}", id);
+        return service.update(id, movieList);
     }
 
     @PostMapping("/{id}/movies/{movieId}")
