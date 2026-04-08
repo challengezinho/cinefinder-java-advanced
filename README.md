@@ -93,7 +93,7 @@ http://localhost:8080
 }
 ```
 
-📌 Retorna um token (provavelmente JWT)
+📌 Retorna um token JWT
 
 ---
 
@@ -308,23 +308,3 @@ cd cinefinder
 ```
 
 ---
-
-## 🧠 Possíveis melhorias futuras
-
-* Favoritar filmes
-* Sistema de recomendação
-* Upload de imagens (poster)
-* Filtros por gênero / avaliação
-* Cache com Redis
-* Deploy em cloud (AWS / Azure)
-
----
-
-Se quiser, posso te ajudar a deixar esse README **nível profissional (pra portfólio / recrutador)** ou até montar:
-
-* 🔥 arquitetura (C4 model)
-* 🔥 diagrama de banco
-* 🔥 coleção do Postman
-* 🔥 testes automatizados
-
-Só falar 👍
