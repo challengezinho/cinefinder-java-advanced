@@ -47,8 +47,10 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "cf_movie_genres", joinColumns = @JoinColumn(name = "movie_id"))
     @Column(name = "genre")
+    @Builder.Default
     private Set<GENRE> genres = new HashSet<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
