@@ -1,7 +1,3 @@
-Aqui vai um **README básico, bem organizado e pronto pra usar no GitHub** para o seu projeto 👇
-
----
-
 # 🎬 CineFinder API
 
 API REST para gerenciamento de filmes, avaliações e listas personalizadas.
