@@ -59,17 +59,15 @@ public class ReviewService {
         var review = repo.findById(id).orElseThrow();
 
         if (reviewDTO.comments() != null && !review.getComments().equalsIgnoreCase(reviewDTO.comments())) {
+
             review.setComments(reviewDTO.comments());
         }
         if (reviewDTO.rating() != null && !review.getRating().equals(reviewDTO.rating())) {
+
             review.setRating(reviewDTO.rating());
         }
 
         return ReviewResponse.fromReview(repo.save(review));
-    }
 
-    @Transactional
-    public void delete(Long id) {
-        repo.deleteById(id);
     }
 }

@@ -37,23 +37,18 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        try {
-            String token = header.substring(7);
-            String email = jwtService.extractEmail(token);
+        String token = header.substring(7);
+        String email = jwtService.extractEmail(token);
 
-            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                var userDetails = userDetailsService.loadUserByUsername(email);
+        var userDetails = userDetailsService.loadUserByUsername(email);
 
-                if (jwtService.isTokenValid(token, email)) {
-                    var auth = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities()
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                }
-            }
-        } catch (Exception e) {
-            logger.error("Erro ao processar token JWT: " + e.getMessage());
-        }
+        var auth = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(auth);
 
         filterChain.doFilter(request, response);
     }
