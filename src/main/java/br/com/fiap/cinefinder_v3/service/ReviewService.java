@@ -70,4 +70,8 @@ public class ReviewService {
         return ReviewResponse.fromReview(repo.save(review));
 
     }
+
+    public void delete(Long id) {
+        repo.deleteById(id);
+    }
 }

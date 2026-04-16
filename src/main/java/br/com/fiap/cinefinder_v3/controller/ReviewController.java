@@ -44,7 +44,11 @@ public class ReviewController {
         return service.update(id, reviewDTO);
     }
 
-    //TODO: Delete
+    @DeleteMapping("/{id}")
+    public void deleteReview(@PathVariable Long id) {
+        log.info("Deletando review de id: {}", id);
+        service.delete(id);
+    }
 
 
 }
