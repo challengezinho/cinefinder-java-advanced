@@ -1,5 +1,6 @@
 package br.com.fiap.cinefinder_v3.controller;
 
+import br.com.fiap.cinefinder_v3.dto.JwtResponse;
 import br.com.fiap.cinefinder_v3.dto.LoginDTO;
 import br.com.fiap.cinefinder_v3.dto.RegisterDTO;
 import br.com.fiap.cinefinder_v3.exception.EmailAlreadyExists;
@@ -52,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginDTO dto) {
+    public JwtResponse login(@RequestBody LoginDTO dto) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -61,6 +62,7 @@ public class AuthController {
                 )
         );
 
-        return jwtService.generateToken(dto.email());
+        return new JwtResponse(jwtService.generateToken(dto.email()));
     }
+
 }
