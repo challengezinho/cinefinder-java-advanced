@@ -1,8 +1,18 @@
 package br.com.fiap.cinefinder_v3.model;
 
 public enum GENRE {
-    SCI_FI,
     ACTION,
+    ADVENTURE,
+    ANIMATION,
+    COMEDY,
+    CRIME,
     DRAMA,
-    ADVENTURE
+    FAMILY,
+    FANTASY,
+    HORROR,
+    MUSIC,
+    MYSTERY,
+    ROMANCE,
+    SCI_FI,
+    THRILLER
 }
