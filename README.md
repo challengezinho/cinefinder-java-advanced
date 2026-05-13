@@ -69,8 +69,8 @@ http://localhost:8080
 
 ```json
 {
-  "name": "miguel",
-  "email": "miguel@email.com",
+  "name": "Jon",
+  "email": "jon@email.com",
   "password": "123456",
   "age": 20
 }
@@ -84,17 +84,12 @@ http://localhost:8080
 
 ```json
 {
-  "email": "miguel@email.com",
+  "email": "jon@email.com",
   "password": "123456"
 }
 ```
 
-📌 Retorna um json com o token JWT no formato 
-```json
-{
-	"token": "SEU_TOKEN_AQUI"
-}
-```
+📌 Retorna um token JWT
 
 ---
 
@@ -102,7 +97,7 @@ http://localhost:8080
 
 ### ➤ Listar filmes (paginado)
 
-`GET /api/movies`
+`GET /api/movies?page=0&size=10`
 
 ---
 
