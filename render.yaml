@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: cinefinder-java-advanced
+    runtime: java
+    buildCommand: "./gradlew build -x test"
+    startCommand: "java -jar build/libs/cinefinder_v3-0.0.1-SNAPSHOT.jar"
