@@ -67,8 +67,10 @@ public class MovieListService {
 
     public MovieListResponse removeMovieToList(Long id, Long movieId) {
         var mList = repo.findById(id).orElseThrow();
-        var movie = movieRepo.findById(movieId).orElseThrow();
-        mList.removeMovie(movie);
+        boolean removed = mList.getMovies().removeIf(m -> movieId.equals(m.getId()));
+        if (!removed) {
+            throw new java.util.NoSuchElementException("Filme não está nesta lista");
+        }
         return MovieListResponse.fromMovieList(repo.save(mList));
     }
 
